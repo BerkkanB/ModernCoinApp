@@ -4,20 +4,24 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.berkkanb.coin.data.model.CoinDataUI
-import com.berkkanb.coin.data.model.CoinMarketUI
+import com.berkkanb.coin.data.model.MarketChartDataUI
 import com.berkkanb.coin.domain.CoinDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailScreenViewModel @Inject constructor(
     private val coinDataRepository: CoinDataRepository,
     savedStateHandle: SavedStateHandle
-): ViewModel(){
+) : ViewModel() {
 
     private val coinId: String = checkNotNull(savedStateHandle["coinId"])
 
@@ -25,20 +29,26 @@ class DetailScreenViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getCoinDetail()
+        getCoinDetails()
     }
 
-    private fun getCoinDetail(){
+    private fun getCoinDetails() {
         viewModelScope.launch {
             setLoadingStatus(true)
-            val response = coinDataRepository.getCoinDetail(coinId)
-            if (response.isSuccessful){
+            val detailRequest = async { coinDataRepository.getCoinDetail(coinId) }
+            val priceRequest = async { coinDataRepository.getMarketChartData(coinId, 7) }
+
+            val detailResponse = detailRequest.await()
+            val priceResponse = priceRequest.await()
+
+            if (detailResponse.isSuccessful && priceResponse.isSuccessful) {
                 _uiState.update {
                     it.copy(
-                        coinDetail = response.body(),
+                        coinDetail = detailResponse.body(),
                         isLoading = false
                     )
                 }
+                priceResponse.body()?.let { setChartData(it) }
             } else {
                 setLoadingStatus(false)
                 setHasError()
@@ -46,7 +56,7 @@ class DetailScreenViewModel @Inject constructor(
         }
     }
 
-    private fun setLoadingStatus(status:Boolean){
+    private fun setLoadingStatus(status: Boolean) {
         _uiState.update {
             it.copy(
                 isLoading = status
@@ -54,10 +64,30 @@ class DetailScreenViewModel @Inject constructor(
         }
     }
 
-    private fun setHasError(){
+    private fun setHasError() {
         _uiState.update {
             it.copy(
                 hasError = true
+            )
+        }
+    }
+
+    // TODO NOT AL
+    private fun setChartData(priceData: MarketChartDataUI) {
+        val chartTimeList = mutableListOf<String>()
+        val chartPriceList = mutableListOf<Float>()
+        priceData.prices.forEach {
+            val price = it[1]
+            val time =
+                Instant.ofEpochMilli(it.first().toLong()).atZone(ZoneId.systemDefault()).format(
+                    DateTimeFormatter.ofPattern("MMM dd")
+                )
+            chartPriceList.add(price)
+            chartTimeList.add(time)
+        }
+        _uiState.update {
+            it.copy(
+                priceData = ChartDataUI(chartTimeList,chartPriceList)
             )
         }
     }
@@ -66,6 +96,12 @@ class DetailScreenViewModel @Inject constructor(
 
 data class DetailScreenUIState(
     val coinDetail: CoinDataUI? = null,
+    val priceData: ChartDataUI? = null,
     val isLoading: Boolean = false,
     val hasError: Boolean = false
+)
+
+data class ChartDataUI(
+    val time: List<String>,
+    val price: List<Float>
 )

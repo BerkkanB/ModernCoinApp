@@ -3,6 +3,7 @@ package com.berkkanb.coin.data.repository
 import com.berkkanb.coin.data.api.ApiService
 import com.berkkanb.coin.data.model.CoinDataUI
 import com.berkkanb.coin.data.model.CoinMarketUI
+import com.berkkanb.coin.data.model.MarketChartDataUI
 import com.berkkanb.coin.domain.CoinDataRepository
 import retrofit2.Response
 import javax.inject.Inject
@@ -18,5 +19,9 @@ class CoinDataRepositoryImpl @Inject constructor(
 
     override suspend fun getCoinDetail(id: String): Response<CoinDataUI> {
         return apiService.getCoinById(id)
+    }
+
+    override suspend fun getMarketChartData(id: String, days: Int): Response<MarketChartDataUI> {
+        return apiService.getMarketChart(id = id, days = days)
     }
 }

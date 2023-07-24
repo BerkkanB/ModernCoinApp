@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.berkkanb.coin"
-        minSdk 23
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -79,6 +79,9 @@ dependencies {
     implementation "androidx.room:room-runtime:2.5.2"
     kapt "androidx.room:room-compiler:2.5.2"
     implementation "androidx.room:room-ktx:2.5.2"
+
+    // Charts
+    implementation 'com.github.jaikeerthick:Composable-Graphs:v1.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
