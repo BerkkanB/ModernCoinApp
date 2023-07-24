@@ -15,7 +15,7 @@ fun CoinNavHost() {
     NavHost(navController = navController, startDestination = CoinNavGraph.HOME_GRAPH) {
         composable(CoinNavGraph.HOME_GRAPH) {
             HomeScreen(
-                navigateToDetail = { navController.navigate("${CoinNavGraph.DETAIL_GRAPH}/{$it}") }
+                navigateToDetail = { navController.navigate("${CoinNavGraph.DETAIL_GRAPH}/$it") }
             )
         }
         composable(
