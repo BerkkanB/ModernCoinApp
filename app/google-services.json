@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "138571901001",
+    "project_id": "coinapp-b8a99",
+    "storage_bucket": "coinapp-b8a99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138571901001:android:63eb202123af01beaef798",
+        "android_client_info": {
+          "package_name": "com.berkkanb.coin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138571901001-faeg082bspljl4bdto8dgqm63s24ai0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmhudkWqypPH5iuV67D2LIz1eJ91jCwTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138571901001-faeg082bspljl4bdto8dgqm63s24ai0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
