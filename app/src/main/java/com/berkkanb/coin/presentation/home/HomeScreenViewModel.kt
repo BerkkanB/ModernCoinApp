@@ -57,9 +57,21 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    fun setQueryText(value:String){
+        val filteredList = uiState.value.coinList?.filter { it.name.contains(value,true) }
+        _uiState.update {
+            it.copy(
+                queryText = value,
+                filteredCoinList = filteredList
+            )
+        }
+    }
+
 }
 data class HomeScreenUIState(
     val coinList: List<CoinMarketUI>? = null,
+    val filteredCoinList: List<CoinMarketUI>? = null,
     val isLoading: Boolean = false,
-    val hasError: Boolean = false
+    val hasError: Boolean = false,
+    val queryText: String = ""
 )
