@@ -17,7 +17,8 @@ fun CoinNavHost(
 ) {
     val navController = rememberNavController()
 
-    val startDestination = if (firebaseUser != null) CoinNavGraph.HOME_GRAPH else CoinNavGraph.AUTH_GRAPH
+    val startDestination =
+        if (firebaseUser != null) CoinNavGraph.HOME_GRAPH else CoinNavGraph.AUTH_GRAPH
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(CoinNavGraph.HOME_GRAPH) {
@@ -35,7 +36,7 @@ fun CoinNavHost(
             CoinNavGraph.AUTH_GRAPH,
             arguments = listOf(navArgument("coinId") { type = NavType.StringType })
         ) {
-            AuthScreen()
+            AuthScreen(navigateToHomeScreen = { navController.navigate(CoinNavGraph.HOME_GRAPH) })
         }
     }
 }

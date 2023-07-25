@@ -13,6 +13,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -23,10 +24,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun AuthScreen(
-    authScreenViewModel: AuthScreenViewModel = hiltViewModel()
+    authScreenViewModel: AuthScreenViewModel = hiltViewModel(),
+    navigateToHomeScreen:()->Unit
 ) {
 
     val uiState by authScreenViewModel.uiState.collectAsState()
+
+    LaunchedEffect(key1 = uiState.firebaseUser){
+        if (uiState.firebaseUser != null){
+            navigateToHomeScreen.invoke()
+        }
+    }
 
     Column(
         modifier = Modifier
