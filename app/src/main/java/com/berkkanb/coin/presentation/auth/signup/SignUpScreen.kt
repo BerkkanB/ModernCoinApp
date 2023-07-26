@@ -75,9 +75,9 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .height(50.dp)
             ) {
-                if (uiState.isLoading){
+                if (uiState.isLoading) {
                     CircularProgressIndicator(color = Color.White)
-                }else {
+                } else {
                     Text(text = "Sign Up")
                 }
             }

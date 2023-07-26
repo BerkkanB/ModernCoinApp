@@ -9,7 +9,7 @@ interface CoinDataRepository {
 
     suspend fun getCoinMarketList(): Response<List<CoinMarketUI>>
 
-    suspend fun getCoinDetail(id:String): Response<CoinDataUI>
+    suspend fun getCoinDetail(id: String): Response<CoinDataUI>
 
-    suspend fun getMarketChartData(id:String,days:Int): Response<MarketChartDataUI>
+    suspend fun getMarketChartData(id: String, days: Int): Response<MarketChartDataUI>
 }

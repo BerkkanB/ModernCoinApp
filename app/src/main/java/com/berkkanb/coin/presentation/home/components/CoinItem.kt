@@ -19,7 +19,7 @@ import com.berkkanb.coin.data.model.CoinMarketUI
 
 @Composable
 fun CoinItem(
-    data:CoinMarketUI,
+    data: CoinMarketUI,
     onClickItem: () -> Unit
 ) {
     Row(

@@ -27,7 +27,7 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             setLoadingStatus(true)
             val response = coinDataRepository.getCoinMarketList()
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 _uiState.update {
                     it.copy(
                         coinList = response.body(),
@@ -41,7 +41,7 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    private fun setLoadingStatus(status:Boolean){
+    private fun setLoadingStatus(status: Boolean) {
         _uiState.update {
             it.copy(
                 isLoading = status
@@ -49,7 +49,7 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    private fun setHasError(){
+    private fun setHasError() {
         _uiState.update {
             it.copy(
                 hasError = true
@@ -57,8 +57,8 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun setQueryText(value:String){
-        val filteredList = uiState.value.coinList?.filter { it.name.contains(value,true) }
+    fun setQueryText(value: String) {
+        val filteredList = uiState.value.coinList?.filter { it.name.contains(value, true) }
         _uiState.update {
             it.copy(
                 queryText = value,
@@ -68,6 +68,7 @@ class HomeScreenViewModel @Inject constructor(
     }
 
 }
+
 data class HomeScreenUIState(
     val coinList: List<CoinMarketUI>? = null,
     val filteredCoinList: List<CoinMarketUI>? = null,

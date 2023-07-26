@@ -87,7 +87,7 @@ class DetailScreenViewModel @Inject constructor(
         }
         _uiState.update {
             it.copy(
-                priceData = ChartDataUI(chartTimeList,chartPriceList)
+                priceData = ChartDataUI(chartTimeList, chartPriceList)
             )
         }
     }

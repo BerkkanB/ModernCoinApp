@@ -35,14 +35,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun LoginScreen(
     loginScreenViewModel: LoginScreenViewModel = hiltViewModel(),
-    navigateToHomeScreen:()->Unit,
-    navigateToSignUpScreen:() -> Unit
+    navigateToHomeScreen: () -> Unit,
+    navigateToSignUpScreen: () -> Unit
 ) {
 
     val uiState by loginScreenViewModel.uiState.collectAsState()
 
-    LaunchedEffect(key1 = uiState.firebaseUser){
-        if (uiState.firebaseUser != null){
+    LaunchedEffect(key1 = uiState.firebaseUser) {
+        if (uiState.firebaseUser != null) {
             navigateToHomeScreen.invoke()
         }
     }
@@ -86,15 +86,15 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
-                onClick = { loginScreenViewModel.signInUser()  },
+                onClick = { loginScreenViewModel.signInUser() },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
             ) {
-                if (uiState.isLoading){
+                if (uiState.isLoading) {
                     CircularProgressIndicator(color = Color.White)
-                }else {
+                } else {
                     Text(text = "Login")
                 }
             }

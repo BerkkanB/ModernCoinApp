@@ -16,14 +16,14 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideAuthenticator() : BaseAuthenticator{
-        return  FirebaseAuthenticator()
+    fun provideAuthenticator(): BaseAuthenticator {
+        return FirebaseAuthenticator()
     }
 
     //TODO REMOVE REPO MODULE
     @Singleton
     @Provides
-    fun provideRepository(authenticator : BaseAuthenticator) : BaseAuthRepository {
+    fun provideRepository(authenticator: BaseAuthenticator): BaseAuthRepository {
         return BaseAuthRepositoryImpl(authenticator)
     }
 }
