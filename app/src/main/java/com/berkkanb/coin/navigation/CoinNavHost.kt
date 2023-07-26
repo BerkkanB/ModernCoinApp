@@ -6,7 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.berkkanb.coin.presentation.auth.AuthScreen
+import com.berkkanb.coin.presentation.auth.login.LoginScreen
+import com.berkkanb.coin.presentation.auth.signup.SignUpScreen
 import com.berkkanb.coin.presentation.detail.DetailScreen
 import com.berkkanb.coin.presentation.home.HomeScreen
 import com.google.firebase.auth.FirebaseUser
@@ -18,7 +19,7 @@ fun CoinNavHost(
     val navController = rememberNavController()
 
     val startDestination =
-        if (firebaseUser != null) CoinNavGraph.HOME_GRAPH else CoinNavGraph.AUTH_GRAPH
+        if (firebaseUser != null) CoinNavGraph.HOME_GRAPH else CoinNavGraph.LOGIN_GRAPH
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(CoinNavGraph.HOME_GRAPH) {
@@ -33,10 +34,19 @@ fun CoinNavHost(
             DetailScreen()
         }
         composable(
-            CoinNavGraph.AUTH_GRAPH,
-            arguments = listOf(navArgument("coinId") { type = NavType.StringType })
+            CoinNavGraph.LOGIN_GRAPH
         ) {
-            AuthScreen(navigateToHomeScreen = { navController.navigate(CoinNavGraph.HOME_GRAPH) })
+            LoginScreen(
+                navigateToHomeScreen = { navController.navigate(CoinNavGraph.HOME_GRAPH) },
+                navigateToSignUpScreen = { navController.navigate(CoinNavGraph.SIGNUP_GRAPH) }
+            )
+        }
+        composable(
+            CoinNavGraph.SIGNUP_GRAPH
+        ) {
+            SignUpScreen(
+                navigateToHomeScreen = { navController.navigate(CoinNavGraph.HOME_GRAPH) }
+            )
         }
     }
 }

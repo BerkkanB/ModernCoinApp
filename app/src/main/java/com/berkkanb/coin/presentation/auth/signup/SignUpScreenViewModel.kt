@@ -1,4 +1,4 @@
-package com.berkkanb.coin.presentation.auth
+package com.berkkanb.coin.presentation.auth.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,11 +13,11 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthScreenViewModel @Inject constructor(
+class SignUpScreenViewModel @Inject constructor(
     private val baseAuthRepository: BaseAuthRepository
 ): ViewModel() {
 
-    private val _uiState = MutableStateFlow(AuthScreenUIState())
+    private val _uiState = MutableStateFlow(SignUpScreenUIState())
     val uiState = _uiState.asStateFlow()
 
     fun setEmail(value:String){
@@ -29,26 +29,6 @@ class AuthScreenViewModel @Inject constructor(
     fun setPassword(value:String){
         _uiState.update {
             it.copy(password = value)
-        }
-    }
-
-    fun signInUser(){
-        viewModelScope.launch {
-            setLoadingStatus(true)
-            try {
-                val user = baseAuthRepository.signInWithEmailPassword(uiState.value.email, uiState.value.password)
-                user?.let { firebaseUser ->
-                    _uiState.update {
-                        it.copy(firebaseUser = firebaseUser)
-                    }
-                    setLoadingStatus(false)
-                }?: kotlin.run {
-                    setLoadingStatus(false)
-                    setHasError()
-                }
-            } catch (e:Exception){
-                //TODO
-            }
         }
     }
 
@@ -66,8 +46,9 @@ class AuthScreenViewModel @Inject constructor(
                     setLoadingStatus(false)
                     setHasError()
                 }
-            } catch (e:Exception){
-                //TODO
+            } catch (e: Exception){
+                setHasError()
+                setLoadingStatus(false)
             }
         }
     }
@@ -88,9 +69,10 @@ class AuthScreenViewModel @Inject constructor(
         }
     }
 
+
 }
 
-data class AuthScreenUIState(
+data class SignUpScreenUIState(
     val email:String = "",
     val password:String = "",
     val isLoading:Boolean = false,
