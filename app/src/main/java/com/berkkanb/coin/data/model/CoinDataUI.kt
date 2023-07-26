@@ -14,8 +14,8 @@ data class CoinDataUI(
     val marketCapRank: Int,
     @SerializedName("last_updated")
     val lastUpdated: String,
-    @SerializedName("price_change_percentage_24h")
-    val priceChangePercentage24h: Double
+    @SerializedName("market_data")
+    val marketData: MarketData
 )
 
 
@@ -27,4 +27,9 @@ data class Image(
     val thumb: String,
     val small: String,
     val large: String
+)
+
+data class MarketData(
+    @SerializedName("price_change_percentage_24h")
+    val priceChangePercentage24: Float
 )

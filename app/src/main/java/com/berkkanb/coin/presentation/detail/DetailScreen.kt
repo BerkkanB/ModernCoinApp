@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -104,7 +105,10 @@ fun DetailScreen(
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-            coinDetail?.priceChangePercentage24h?.let {
+            coinDetail?.marketData?.priceChangePercentage24?.let {
+
+                val color = if (it < 0) Color.Red else Color.Green
+
                 Text(
                     text = "Price Change 24H",
                     fontSize = 18.sp,
@@ -112,7 +116,9 @@ fun DetailScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = it.toString()
+                    text = "${it}%",
+                    fontWeight = FontWeight.Bold,
+                    color = color
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
