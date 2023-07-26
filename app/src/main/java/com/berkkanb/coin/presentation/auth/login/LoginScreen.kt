@@ -53,7 +53,7 @@ fun LoginScreen(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(20.dp),
-            onClick = { },
+            onClick = { navigateToSignUpScreen.invoke() },
             style = TextStyle(
                 fontSize = 14.sp,
                 fontFamily = FontFamily.Default,
